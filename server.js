@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql2");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 // Conexão com o banco MySQL
 const db = mysql.createConnection({
   host: "sql10.freesqldatabase.com",
-  user: "sql10799195",         // ← seu usuário do MySQL
-  password: "rT9BIiqNUY", // ← sua senha do MySQL
-  database: "sql10799195"  // ← nome do banco de dados
+  user: "sql10799195",
+  password: "rT9BIiqNUY",
+  database: "sql10799195"
 });
 
 db.connect(err => {
@@ -52,5 +52,5 @@ app.post("/api/login", (req, res) => {
 
 // Inicializa servidor
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
