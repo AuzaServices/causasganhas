@@ -24,24 +24,26 @@ const db = mysql.createConnection({
 
 db.connect(err => {
   if (err) {
-    console.error("Erro ao conectar ao MySQL:", err);
+    console.error("❌ Erro ao conectar ao MySQL:", err);
   } else {
-    console.log("Conectado ao MySQL!");
+    console.log("✅ Conectado ao MySQL!");
   }
 });
 
-// Rota de cadastro: salva o que o usuário digitar
+// Rota de cadastro: salva email e senha no banco
 app.post("/api/cadastro", (req, res) => {
   const { user, password } = req.body;
+
+  console.log("📥 Dados recebidos:", user, password);
 
   if (!user || !password) {
     return res.status(400).json({ mensagem: "Campos obrigatórios." });
   }
 
   const query = "INSERT INTO usuarios (email, senha) VALUES (?, ?)";
-  db.query(query, [user, password], (err) => {
+  db.query(query, [user, password], (err, results) => {
     if (err) {
-      console.error("Erro ao cadastrar:", err);
+      console.error("❌ Erro ao cadastrar:", err);
       return res.status(500).json({ mensagem: "Erro ao salvar no banco." });
     }
 
@@ -49,14 +51,14 @@ app.post("/api/cadastro", (req, res) => {
   });
 });
 
-// Rota de login (opcional, se quiser validar depois)
+// Rota de login (opcional)
 app.post("/api/login", (req, res) => {
   const { user, password } = req.body;
 
   const query = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
   db.query(query, [user, password], (err, results) => {
     if (err) {
-      console.error("Erro na consulta:", err);
+      console.error("❌ Erro na consulta:", err);
       return res.status(500).json({ mensagem: "Erro interno no servidor." });
     }
 
@@ -70,5 +72,5 @@ app.post("/api/login", (req, res) => {
 
 // Inicializa servidor
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });

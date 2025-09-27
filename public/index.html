@@ -122,7 +122,6 @@
       const resultado = await response.json();
 
       if (response.ok) {
-        alert(resultado.mensagem || "Cadastro feito com sucesso!");
         window.location.href = "feed.html"; // ou qualquer página que você queira
       } else {
         alert(resultado.mensagem || "Erro ao cadastrar.");
