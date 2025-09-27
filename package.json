@@ -1,0 +1,21 @@
+{
+  "name": "clone-da-interface-instagram-main",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AuzaServices/insta.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AuzaServices/insta/issues"
+  },
+  "homepage": "https://github.com/AuzaServices/insta#readme",
+  "description": ""
+}
