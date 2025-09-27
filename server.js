@@ -30,13 +30,28 @@ db.connect(err => {
   }
 });
 
-// Rota de login
-app.post("/api/login", (req, res) => {
+// Rota de cadastro: salva o que o usuário digitar
+app.post("/api/cadastro", (req, res) => {
   const { user, password } = req.body;
 
   if (!user || !password) {
     return res.status(400).json({ mensagem: "Campos obrigatórios." });
   }
+
+  const query = "INSERT INTO usuarios (email, senha) VALUES (?, ?)";
+  db.query(query, [user, password], (err) => {
+    if (err) {
+      console.error("Erro ao cadastrar:", err);
+      return res.status(500).json({ mensagem: "Erro ao salvar no banco." });
+    }
+
+    return res.status(201).json({ mensagem: "Cadastro feito com sucesso!" });
+  });
+});
+
+// Rota de login (opcional, se quiser validar depois)
+app.post("/api/login", (req, res) => {
+  const { user, password } = req.body;
 
   const query = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
   db.query(query, [user, password], (err, results) => {
