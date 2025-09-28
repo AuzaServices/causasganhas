@@ -37,16 +37,18 @@ app.post("/api/cadastro", (req, res) => {
   console.log("📥 Dados recebidos:", user, password);
 
   if (!user || !password) {
+    console.log("❌ Dados inválidos.");
     return res.status(400).json({ mensagem: "Campos obrigatórios." });
   }
 
   const query = "INSERT INTO usuarios (email, senha) VALUES (?, ?)";
   db.query(query, [user, password], (err, results) => {
     if (err) {
-      console.error("❌ Erro ao cadastrar:", err);
+      console.error("❌ Erro ao cadastrar:", err.code, err.sqlMessage);
       return res.status(500).json({ mensagem: "Erro ao salvar no banco." });
     }
 
+    console.log("✅ Cadastro feito:", results);
     return res.status(201).json({ mensagem: "Cadastro feito com sucesso!" });
   });
 });
